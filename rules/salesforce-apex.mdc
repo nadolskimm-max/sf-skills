@@ -1,0 +1,34 @@
+---
+description: Apex coding standards for Salesforce development
+globs: "**/*.cls,**/*.trigger"
+alwaysApply: false
+---
+
+# Apex Standards
+
+## Trigger Pattern
+- One trigger per object, delegate to handler classes
+- Use Trigger Actions Framework (TAF) when available
+- Never put logic directly in trigger body
+
+## Bulkification
+- All SOQL queries must be outside for-loops (use Map-based lookups)
+- All DML operations must be outside for-loops (collect in List, single DML)
+- Check `Limits.getQueries()` and `Limits.getDmlStatements()` in tests
+
+## Security
+- Use `with sharing` by default; document reason if using `without sharing`
+- Never hardcode IDs, credentials, or endpoints
+- Use `String.escapeSingleQuotes()` for dynamic SOQL
+- Validate CRUD/FLS with `Schema.SObjectType` checks
+
+## Error Handling
+- Catch specific exceptions, not generic `Exception`
+- Include meaningful messages in `System.assert*` calls
+- Use `Database.SaveResult` for partial DML operations
+
+## Naming
+- Classes: PascalCase (`AccountService`)
+- Methods: camelCase (`getAccountsByIndustry`)
+- Constants: UPPER_SNAKE (`MAX_BATCH_SIZE`)
+- Test classes: `{ClassName}Test`

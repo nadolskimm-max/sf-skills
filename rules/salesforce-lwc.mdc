@@ -1,0 +1,34 @@
+---
+description: Lightning Web Component patterns for Salesforce development
+globs: "**/lwc/**/*.js,**/lwc/**/*.html"
+alwaysApply: false
+---
+
+# LWC Standards
+
+## Template Directives
+- Use `lwc:if`, `lwc:elseif`, `lwc:else` (not deprecated `if:true`/`if:false`)
+- Always add `key={item.Id}` to `for:each` iterations
+- Handle both `.data` and `.error` cases for `@wire` results
+
+## JavaScript
+- Use `@wire` with `cacheable=true` for read operations
+- Avoid `@track` on primitives (reactive by default since LWC v2)
+- Never manipulate DOM directly — use reactive properties
+- Import only needed modules from `lwc`
+
+## Communication
+- Properties down (`@api`), events up (`CustomEvent`)
+- Use Lightning Message Service (LMS) for cross-component communication
+- Use `NavigationMixin` for page navigation
+
+## SLDS & Accessibility
+- Use SLDS utility classes for styling
+- Include `aria-label` on interactive elements
+- Support keyboard navigation
+- Use `lightning-*` base components when available
+
+## Error Handling
+- Show user-friendly error messages via `ShowToastEvent`
+- Parse `error.body.message` for Apex exceptions
+- Use `mode: 'sticky'` for critical errors
